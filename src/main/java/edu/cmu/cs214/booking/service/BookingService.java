@@ -84,7 +84,7 @@ public class BookingService {
             }
             if (!conflicts) {
                 Booking promoted = new Booking(
-                        "b" + nextBookingSeq++, waiter.room(), waiter.user(), waiter.interval());
+                        "b" + nextBookingSeq++, room, waiter.user(), waiter.interval());
                 store.addBooking(promoted);
                 store.removeWaitlistEntry(waiter.id());
                 break;
