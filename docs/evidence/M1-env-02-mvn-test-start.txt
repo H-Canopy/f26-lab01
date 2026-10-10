@@ -1,0 +1,19 @@
+﻿# 证据 M1-env-02：起点状态（预设缺陷）
+# 采集人 : H-Canopy (M1)
+# 分支   : chore/env-setup
+# 时间   : 2026-10-10 10:46:21
+# 用途   : 实验报告 第 2.2 节 / 评分点「环境与课前任务 4 分」
+# 命令   : mvn test
+# 说明   : 编译与依赖解析成功，恰好 1 个测试失败 → 指导书所述预设缺陷，非环境问题
+[INFO] Building lab01-booking 1.0.0
+[INFO] Running edu.cmu.cs214.booking.domain.TimeIntervalTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.057 s -- in edu.cmu.cs214.booking.domain.TimeIntervalTest
+[INFO] Running edu.cmu.cs214.booking.service.BookingServiceTest
+[ERROR] Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.030 s <<< FAILURE! -- in edu.cmu.cs214.booking.service.BookingServiceTest
+org.opentest4j.AssertionFailedError: Unexpected type, expected: <edu.cmu.cs214.booking.service.BookingResult.Confirmed> but was: <edu.cmu.cs214.booking.service.BookingResult.Waitlisted>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+[ERROR] Failures:
+[ERROR]   BookingServiceTest.sameSlotInDifferentRoomsAreBothConfirmed:51 Unexpected type, expected: <edu.cmu.cs214.booking.service.BookingResult.Confirmed> but was: <edu.cmu.cs214.booking.service.BookingResult.Waitlisted>
+[ERROR] Tests run: 10, Failures: 1, Errors: 0, Skipped: 0
+[INFO] BUILD FAILURE

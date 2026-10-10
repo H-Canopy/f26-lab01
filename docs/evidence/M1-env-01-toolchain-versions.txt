@@ -1,0 +1,20 @@
+﻿# 证据 M1-env-01：工具链版本
+# 采集人 : H-Canopy (M1)
+# 分支   : chore/env-setup
+# 时间   : 2026-10-10 10:46:21
+# 用途   : 实验报告 第 2.1 节 / 评分点「环境与课前任务 4 分」
+# 命令   : java --version ; mvn --version ; git --version ; claude --version
+java 21.0.8 2025-07-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.8+12-LTS-250)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.8+12-LTS-250, mixed mode, sharing)
+
+Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)
+Maven home: D:\Bigfish\.tools\apache-maven-3.9.16
+Java version: 21.0.8, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-21
+Default locale: zh_CN, platform encoding: UTF-8
+OS name: "windows 11", version: "10.0", arch: "amd64", family: "windows"
+
+git version 2.53.0.windows.2
+
+2.1.92 (Claude Code)
+
