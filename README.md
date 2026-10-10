@@ -25,3 +25,16 @@ By the way: the fix may not be where the failing test first points you. :-)
 - Transcript export script (for Claude Code; modify if using a different tool): `tools/export-transcripts.sh` (the handout tells you when to run it)
 
 See the Lab 1 handout on the course page for the three milestones you show a TA.
+
+## 工具与模型声明
+
+- 工具：Claude Code（命令行，v2.1.92）；IDE：Visual Studio Code
+- 模型：`kimi-k3`（经 Anthropic 兼容接口接入）
+
+## 本组的实验一材料
+
+- 分工与留痕总表：[`CONTRIBUTIONS.md`](CONTRIBUTIONS.md)
+- 执行顺序与每人任务清单：[`PLAN.md`](PLAN.md)
+- 实验报告：[`docs/实验报告.md`](docs/实验报告.md)
+- 证据索引：[`docs/evidence/`](docs/evidence/)
+- 组仓库：<https://github.com/H-Canopy/f26-lab01>
