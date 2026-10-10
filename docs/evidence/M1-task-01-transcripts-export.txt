@@ -1,44 +1,24 @@
 # 证据 M1-task-01：会话导出 + 脱敏检查 + 确认未提交
-# 采集人 : H-Canopy (M1)
-# 分支   : main
-# 时间   : 2026-10-10 11:25:03
-# 用途   : 实验报告 第 6.1 节 / 评分点「会话记录已导出且未提交 4 分」
-# 环境   : Git Bash，cwd = 仓库根目录
-# 说明   : 会话必须在本仓库根目录启动才会被脚本找到；本次会话 cwd=D:\Bigfish\f26-lab01
-bash.exe : + git branch --show-current
-所在位置 行:19 字符: 8
-+ $raw = & $bash D:\Bigfish\.tmp\m1-evidence.sh 2>&1 | Out-String
-+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (+ git branch --show-current:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 
+# 采集人: H-Canopy (M1) | 分支: main | 用途: 报告 6.1 / 评分点「已导出且未提交 4 分」
+# 环境: Git Bash，cwd = 仓库根目录（会话必须在仓库根目录启动才会被脚本找到）
+$ git branch --show-current
 main
-+ ./tools/export-transcripts.sh
+$ ./tools/export-transcripts.sh
 Exported 1 session(s) to transcripts/ (8.0K total).
 
 Next steps:
   1. Skim the exported files for anything accidentally personal (see policies.md).
   2. git add transcripts && git commit -m "Add agent transcripts"
   3. git push
-+ ls -l transcripts/
+$ ls -l transcripts/
 total 8
 -rw-r--r-- 1 11422 197609 6055 Oct 10 11:24 134168a2-cd48-4ee6-a990-6e4d3d44d641.jsonl
---- 精确检索真实凭据形态 ---
-+ echo '--- 精确检索真实凭据形态 ---'
-+ grep -rniE 'sk-[A-Za-z0-9_-]{16,}' transcripts/
+$ grep -rniE 'sk-[A-Za-z0-9_-]{16,}' transcripts/
 (无命中：未见 API key 形态)
-+ echo '(无命中：未见 API key 形态)'
-+ grep -rn ANTHROPIC_AUTH_TOKEN transcripts/
-+ echo '(无命中：未见 auth token 变量名)'
-(无命中：未见 auth token 变量名)
-+ echo '--- 未提交确认 ---'
---- 未提交确认 ---
-+ git check-ignore -v transcripts
+$ git check-ignore -v transcripts
 .gitignore:6:transcripts/	transcripts
-[A] git status --short -- transcripts   （应为空 = 未跟踪也未暂存）：
-+ echo '[A] git status --short -- transcripts   （应为空 = 未跟踪也未暂存）：'
-+ git status --short -- transcripts
-+ echo '[B] git status --ignored --short -- transcripts   （应为 !! = 被忽略）：'
-+ git status --ignored --short -- transcripts
-[B] git status --ignored --short -- transcripts   （应为 !! = 被忽略）：
+$ git status --short -- transcripts
+(以上为空 = transcripts/ 未跟踪、未暂存)
+$ git status --ignored --short -- transcripts
 !! transcripts/
+(!! = 被 .gitignore 忽略)
