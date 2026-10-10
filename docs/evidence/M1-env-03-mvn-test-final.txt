@@ -1,12 +1,12 @@
-﻿# 证据 M1-env-03：main 最终全绿
-# 采集人 : H-Canopy (M1)
-# 分支   : main
-# 时间   : 2026-10-10 11:24:43
-# 用途   : 实验报告 附录 B / 里程碑 1+2 成果合入后的验收
-# 环境   : JDK 21.0.8 (Oracle), Maven 3.9.16
-# 命令   : mvn test
+# 证据 M1-env-03：main 最终全绿（三个里程碑全部合入后）
+# 采集人: H-Canopy (M1) | 分支: main | 时间: 2026-10-10 11:47:52
+# 用途: 报告 附录 B / 里程碑 1+2+3 成果合入后的验收
+# 环境: JDK 21.0.8 (Oracle), Maven 3.9.16    命令: mvn test
+# 含: TimeIntervalTest 5 / BookingServiceTest 6 / CancelBookingTest 6(M4) / IsAvailableTest 2(M5)
 [INFO] Building lab01-booking 1.0.0
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.046 s -- in edu.cmu.cs214.booking.domain.TimeIntervalTest
-[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s -- in edu.cmu.cs214.booking.service.BookingServiceTest
-[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.045 s -- in edu.cmu.cs214.booking.domain.TimeIntervalTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in edu.cmu.cs214.booking.service.BookingServiceTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 s -- in edu.cmu.cs214.booking.service.CancelBookingTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in edu.cmu.cs214.booking.service.IsAvailableTest
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
 [INFO] BUILD SUCCESS
