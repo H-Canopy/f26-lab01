@@ -29,7 +29,7 @@ See the Lab 1 handout on the course page for the three milestones you show a TA.
 ## 工具与模型声明
 
 - 工具：Claude Code（命令行，v2.1.92）；IDE：Visual Studio Code
-- 模型：`<填写会话中实际使用的模型名称>`
+- 模型：`kimi-k3`（经 Anthropic 兼容接口接入）
 
 ## 本组的实验一材料
 
