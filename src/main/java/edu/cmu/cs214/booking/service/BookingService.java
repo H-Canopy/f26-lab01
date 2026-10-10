@@ -6,6 +6,8 @@ import edu.cmu.cs214.booking.domain.TimeInterval;
 import edu.cmu.cs214.booking.domain.User;
 import edu.cmu.cs214.booking.domain.WaitlistEntry;
 import edu.cmu.cs214.booking.repo.BookingStore;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,12 +53,42 @@ public class BookingService {
     /**
      * Cancels the confirmed booking identified by {@code bookingId}, releasing the
      * time slot it held. If no booking with that id exists, this method does nothing.
+     * After removal, the earliest waitlisted user whose interval fits the remaining
+     * bookings of the same room is promoted to a confirmed booking.
      */
     public void cancelBooking(String bookingId) {
         Optional<Booking> booking = store.findBooking(bookingId);
         if (booking.isEmpty()) {
             return;
         }
+        Room room = booking.get().room();
         store.removeBooking(bookingId);
+        promoteFromWaitlist(room);
+    }
+
+    /**
+     * Promotes at most one waitlisted user for {@code room}: the earliest (by seq)
+     * waiter whose interval does not overlap any remaining confirmed booking.
+     * Waiters who still conflict are skipped; if none fits, nobody is promoted.
+     */
+    private void promoteFromWaitlist(Room room) {
+        List<WaitlistEntry> waiters = new ArrayList<>(store.waitlistForRoom(room));
+        waiters.sort(Comparator.comparingInt(WaitlistEntry::seq));
+        for (WaitlistEntry waiter : waiters) {
+            boolean conflicts = false;
+            for (Booking existing : store.bookingsForRoom(room)) {
+                if (existing.interval().overlaps(waiter.interval())) {
+                    conflicts = true;
+                    break;
+                }
+            }
+            if (!conflicts) {
+                Booking promoted = new Booking(
+                        "b" + nextBookingSeq++, waiter.room(), waiter.user(), waiter.interval());
+                store.addBooking(promoted);
+                store.removeWaitlistEntry(waiter.id());
+                break;
+            }
+        }
     }
 }
