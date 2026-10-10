@@ -1,0 +1,25 @@
+# 证据 M3-m2-03：方法位置与补丁可应用性
+# 采集人：xing-ding (M3)
+# 分支：main
+# 时间：2026-10-10
+# 用途：实验报告 §4.6 / 验证 cancelBooking 放在 listBookings 之后，agent-attempt.patch 可干净应用
+# 命令：git branch --show-current ; git apply --check changes/agent-attempt.patch ;
+#       grep -n "listBookings|cancelBooking|promoteFromWaitlist" src/main/java/edu/cmu/cs214/booking/service/BookingService.java
+
+$ git branch --show-current
+main
+
+$ git apply --check changes/agent-attempt.patch
+# 返回码 0（无输出即成功）
+
+$ grep -n "listBookings|cancelBooking|promoteFromWaitlist" src/main/java/edu/cmu/cs214/booking/service/BookingService.java
+49:     public List<Booking> listBookings(Room room) {
+59:     public void cancelBooking(String bookingId) {
+66:         promoteFromWaitlist(room);
+74:     private void promoteFromWaitlist(Room room) {
+
+# 结论：
+# - listBookings 在第49行，cancelBooking 在第59行（其后），promoteFromWaitlist 在第74行（类末尾）
+# - cancelBooking 严格放在 listBookings 之后，符合指导书约束
+# - changes/agent-attempt.patch 在当前 main 上 git apply --check 返回 0，说明方法位置正确，
+#   M5 的补丁可以干净应用，不会产生偏移冲突

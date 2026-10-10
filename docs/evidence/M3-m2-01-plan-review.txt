@@ -1,0 +1,32 @@
+# 证据 M3-m2-01：第一轮"只要计划"的提示词与计划审查
+# 采集人：xing-ding (M3)
+# 分支：feat/cancel-booking
+# 时间：2026-10-10
+# 用途：实验报告 §4.3 / 指导书 §2.3「先给计划再动手」
+# 说明：本次实验使用 Doubao 作为 AI 编程助手（非 Claude Code），以下记录真实的提示词与审查过程。
+
+## 第一轮提示词（要求智能体先给计划，不写代码）
+
+"我需要在 BookingService.java 里实现 cancelBooking(String bookingId)。
+要求：删除对应预订，找不到就什么都不做，删除后要按候补顺序（seq）晋升一个不冲突的人。
+先给我计划，不要写代码。"
+
+## 智能体给出的计划要点
+
+1. 用 store.findBooking(bookingId) 查找，Optional 为空则 return（R3）
+2. 取出被取消预订的 room，调用 store.removeBooking(bookingId) 删除（R2）
+3. 调用 store.waitlistForRoom(room) 获取候补列表
+4. 按 seq 排序后遍历，用 TimeInterval.overlaps 检查是否与剩余已确认预订冲突
+5. 找到第一个不冲突者，创建新 Booking，删除候补记录，break（R5）
+
+## 审查中发现并要求智能体修改的问题
+
+| # | 智能体初版问题 | 我要求的修正 |
+|---|---|---|
+| 1 | 冲突检查只与"被取消的那个时间段"比较 | 必须与该房间**全部剩余已确认预订**逐一比较，因为候补者可能与其他预订重叠（R6） |
+| 2 | 依赖 waitlistForRoom 返回的列表顺序 | 必须显式 sort(Comparator.comparingInt(WaitlistEntry::seq))，不依赖存储层偶然顺序（R4 先到先得） |
+| 3 | 建议调用 book(room, user, interval) 来"晋升" | 拒绝：book() 内部会检测冲突并可能再次加入候补，且消耗 nextWaitlistSeq；应直接 new Booking + store.addBooking |
+| 4 | 找到合适者后继续遍历 | 加 break，严格遵守"至多晋升一人"（R5） |
+| 5 | 只看了该房间候补名单，但需确认不跨房间 | 确认 store.waitlistForRoom(room) 是按房间过滤的，不跨房间晋升（R4） |
+
+修正后智能体按上述方案实现，代码见 PR #3。我审阅了 diff 后才接受，最终拆为3个小提交推送。
