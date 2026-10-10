@@ -36,5 +36,6 @@ See the Lab 1 handout on the course page for the three milestones you show a TA.
 - 分工与留痕总表：[`CONTRIBUTIONS.md`](CONTRIBUTIONS.md)
 - 执行顺序与每人任务清单：[`PLAN.md`](PLAN.md)
 - 实验报告：[`docs/实验报告.md`](docs/实验报告.md)
+- **截图与证据清单（每人对照执行）**：[`docs/证据清单.md`](docs/证据清单.md)
 - 证据索引：[`docs/evidence/`](docs/evidence/)
 - 组仓库：<https://github.com/H-Canopy/f26-lab01>
