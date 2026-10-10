@@ -1,0 +1,27 @@
+# 证据 M3-m2-02：提交序列小而可审查
+# 采集人：xing-ding (M3)
+# 分支：main（PR #3 合并后）
+# 时间：2026-10-10
+# 用途：实验报告 §4.6 / 评分点「里程碑 2 · 15」
+# 命令：git branch --show-current ; git log --oneline -4
+# 说明：以下为 PR #3 合并后 main 上的提交。M3 的3个小提交为 1c8196c、16b6e6b、d869f7d，
+#       按时间顺序拆分为「删除+静默」→「候补晋升」→「小重构」，每个提交只做一件事。
+
+$ git branch --show-current
+main
+
+$ git log --oneline -4
+a89dc66 Merge pull request #2 from H-Canopy/fix/m1-root-cause
+9228a95 Merge pull request #3 from H-Canopy/feat/cancel-booking
+722b1c6 Fix InMemoryBookingStore.bookingsForRoom to honor per-room contract; add regression test
+63f0400 Merge pull request #1 from H-Canopy/chore/env-setup
+
+# M3 在 feat/cancel-booking 分支上的3个提交（git log --oneline feat/cancel-booking）：
+d869f7d Use room parameter directly when creating promoted booking
+16b6e6b Promote earliest fitting waiter on cancellation
+1c8196c Add cancelBooking: remove booking, ignore unknown ids
+
+# 如实说明：M3 的3个提交早于 M2 的根因修复（722b1c6），
+# 因此在那3个提交上 mvn test 为 10 tests / 1 failure（失败用 sameSlotInDifferentRoomsAreBothConfirmed
+# 是里程碑1的预设缺陷，由 M2 在后续 PR #2 中修复）。M3 的代码未引入任何新失败。
+# M2 修复合并后，main 上最终结果为 11 tests / 0 failures / BUILD SUCCESS。
