@@ -3,10 +3,12 @@ package edu.cmu.cs214.booking.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
+import edu.cmu.cs214.booking.domain.Booking;
 import edu.cmu.cs214.booking.domain.Room;
 import edu.cmu.cs214.booking.domain.TimeInterval;
 import edu.cmu.cs214.booking.domain.User;
 import edu.cmu.cs214.booking.repo.InMemoryBookingStore;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class BookingServiceTest {
@@ -57,5 +59,23 @@ class BookingServiceTest {
         svc.book(roomA, alice, new TimeInterval(600, 660));
         svc.book(roomA, bob, new TimeInterval(660, 720));
         assertEquals(2, svc.listBookings(roomA).size());
+    }
+
+    @Test
+    void bookingsForRoomReturnsOnlyBookingsForThatRoom() {
+        // Regression test pinning the root cause at the repo layer: the interface
+        // promises "confirmed bookings held for {@code room}", so a booking for a
+        // different room must never be returned here.
+        InMemoryBookingStore store = new InMemoryBookingStore();
+        store.addBooking(new Booking("b1", roomA, alice, new TimeInterval(600, 660)));
+        store.addBooking(new Booking("b2", roomB, bob, new TimeInterval(600, 660)));
+
+        List<Booking> roomABookings = store.bookingsForRoom(roomA);
+        assertEquals(1, roomABookings.size());
+        assertEquals("b1", roomABookings.get(0).id());
+
+        List<Booking> roomBBookings = store.bookingsForRoom(roomB);
+        assertEquals(1, roomBBookings.size());
+        assertEquals("b2", roomBBookings.get(0).id());
     }
 }
